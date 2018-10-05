@@ -3,10 +3,23 @@
 
 using namespace std;
 
+const double kEps = 1e-15;
+
+int isEqual(double a, double b)
+{
+	if (abs(a - b) < kEps)
+	{
+		return 1; //числа равны
+	}
+	else
+	{
+		return 0; //числа не равны
+	}
+}
+
 int main()
 {
-	char i = 0;
-	float Xf, Xl, dX, a, b, c, F;
+	double Xf, Xl, dX, a, b, c, F;
 	int expression;
 	cout << "Enter a: ";
 	cin >> a;
@@ -20,63 +33,56 @@ int main()
 	cin >> Xl;
 	cout << "Enter dX: ";
 	cin >> dX;
-	if (Xf > Xl || dX == 0)
+	if (Xf > Xl || dX <= 0)
 	{
-		cout << "ERROR!!";
+		if (dX <= 0)
+		{
+			cout << "\nERROR!!\ndX < 0";
+		}
+		else if (Xf > Xl)
+		{
+			cout << "\nERROR!!\nX first > X last";
+		}
 		return 99;
 	}
-	expression = ~((int)a | (int)b | (int)c);
-	while (expression < 0)
-	{
-		i++;
-		expression = expression << 1;
-	}
-	expression = expression >> i;
+	expression = ~(static_cast<int>(a) | static_cast<int>(b) | static_cast<int>(c));
 	cout << "---------------------------------------\n";
 	cout << "|        X         |         F        |\n";
 	cout << "---------------------------------------\n";
-	cout.fill(' ');
 	cout.precision(3);
+	cout << fixed;
 	for (; Xf <= Xl; Xf += dX)
 	{
-		if (Xf < 0 && b != 0)
+		cout << "|";
+		cout.width(12);
+		cout << Xf;
+		cout << "      |";
+		cout.width(12);
+		if (Xf < 0 && isEqual(b,0.0)==0)
 		{
 			F = -a * pow(Xf, 2) + b;
 		}
-		else if (Xf > 0 && b == 0)
+		else if (Xf > 0 && isEqual(b, 0.0) == 1)
 		{
 			F = Xf / (Xf - c) + 5.5;
 		}
 		else
 		{
+			if (isEqual(c,0.0)==1)
+			{
+				cout << "    inf or NaN";
+				cout << "    |\n";
+				continue;
+			}
 			F = Xf / -c;
 		}
-		cout << "|";
-		cout.width(12);
-		cout << fixed << right << Xf;
-		cout << "      |";
-		cout.width(12);
 		if (expression != 0)
 		{
-			if ((isnan(F)) != 0 || (isinf(F)) != 0)
-			{
-				cout << " inf or NaN";
-			}
-			else
-			{
-				cout << fixed << right << F;
-			}
+			cout << F;
 		}
 		else
 		{
-			if ((isnan(F)) != 0 || (isinf(F)) != 0)
-			{
-				cout << " inf or NaN";
-			}
-			else
-			{
-				cout << fixed << right << floor(F);
-			}
+			cout << static_cast<int>(F);
 		}
 		cout << "      |\n";
 	}
