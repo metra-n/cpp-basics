@@ -3,17 +3,16 @@
 
 using namespace std;
 
-const double kEps = 1e-15;
-
 int isEqual(double a, double b)
 {
+	const double kEps = 1e-15;
 	if (abs(a - b) < kEps)
 	{
-		return 1; //числа равны
+		return 1;
 	}
 	else
 	{
-		return 0; //числа не равны
+		return 0;
 	}
 }
 
@@ -33,16 +32,14 @@ int main()
 	cin >> Xl;
 	cout << "Enter dX: ";
 	cin >> dX;
-	if (Xf > Xl || dX <= 0)
+	if (dX <= 0)
 	{
-		if (dX <= 0)
-		{
-			cout << "\nERROR!!\ndX < 0";
-		}
-		else if (Xf > Xl)
-		{
-			cout << "\nERROR!!\nX first > X last";
-		}
+		cout << "\nERROR!!\ndX < 0";
+		return 99;
+	}
+	else if (Xf > Xl)
+	{
+		cout << "\nERROR!!\nX first > X last";
 		return 99;
 	}
 	expression = ~(static_cast<int>(a) | static_cast<int>(b) | static_cast<int>(c));
@@ -58,17 +55,23 @@ int main()
 		cout << Xf;
 		cout << "      |";
 		cout.width(12);
-		if (Xf < 0 && isEqual(b,0.0)==0)
+		if (Xf < 0 && !isEqual(b, 0.0))
 		{
 			F = -a * pow(Xf, 2) + b;
 		}
-		else if (Xf > 0 && isEqual(b, 0.0) == 1)
+		else if (Xf > 0 && isEqual(b, 0.0))
 		{
-			F = Xf / (Xf - c) + 5.5;
+			if ((Xf - c) != 0) F = Xf / (Xf - c) + 5.5;
+			else
+			{
+				cout << "    inf or NaN";
+				cout << "    |\n";
+				continue;
+			}
 		}
 		else
 		{
-			if (isEqual(c,0.0)==1)
+			if (isEqual(c, 0.0))
 			{
 				cout << "    inf or NaN";
 				cout << "    |\n";
