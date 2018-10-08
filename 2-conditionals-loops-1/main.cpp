@@ -61,7 +61,7 @@ int main()
 		}
 		else if (Xf > 0 && isEqual(b, 0.0))
 		{
-			if ((Xf - c) != 0) F = Xf / (Xf - c) + 5.5;
+			if (!isEqual(Xf, c)) F = Xf / (Xf - c) + 5.5;
 			else
 			{
 				cout << "    inf or NaN";
