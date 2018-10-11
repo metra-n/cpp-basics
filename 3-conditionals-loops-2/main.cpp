@@ -1,10 +1,11 @@
-#include<iostream> 
-#include<cmath> 
-#include<iomanip>
+#include <iostream> 
+#include <cmath> 
+#include <iomanip>
+#include <string>
 
 using namespace std;
 
-int isEqual(double a, double b)
+bool isEqual(double a, double b)
 {
 	const double kEps = 1e-15;
 	if (abs(a - b) < kEps)
@@ -21,10 +22,10 @@ int main()
 {
 	double sin_lib, sin_math, Xf, Xl, dX, Eps, element;
 	int iterations;
-	const int MAX_ITER = 65;
-	cout << "Enter X first: ";
+	const int kMaxIter = 1300;
+	cout << "Enter X first >= -35: ";
 	cin >> Xf;
-	cout << "Enter X last: ";
+	cout << "Enter X last <= 35: ";
 	cin >> Xl;
 	cout << "Enter dX: ";
 	cin >> dX;
@@ -32,28 +33,37 @@ int main()
 	cin >> Eps;
 	if (dX <= 0.0)
 	{
-		cout << "\nERROR!!\ndX < 0";
+		cout << "\nERROR!!\ndX <= 0";
 		return 97;
 	}
-	else if (Xf > Xl)
+	if (Xf > Xl)
 	{
 		cout << "\nERROR!!\nX first > X last";
 		return 98;
 	}
-	else if (Eps < 0)
+	if (Eps <= 0)
 	{
-		cout << "\nERROR!!\nEpsilon < 0";
+		cout << "\nERROR!!\nEpsilon <= 0";
 		return 99;
 	}
-	cout << "-----------------------------------------------------------------------\n";
-	cout << "|      X      |  sin(x) (built-in)  |  sin(x) (series)   | iterations |\n";
-	cout << "-----------------------------------------------------------------------\n";
+	if (Xf<-35)
+	{
+		cout << "\nERROR!!\nX first < 35";
+		return 100;
+	}
+	if (Xl > 35)
+	{
+		cout << "\nERROR!!\nX last > 35";
+		return 101;
+	}
+	cout << string(71, '-') << endl;
+	cout << "|      X      | sin(x)/x (built-in) | sin(x)/x (series)  | iterations |\n";
+	cout << string(71, '-') << endl;
 	cout << fixed;
 	for (; Xf <= Xl; Xf += dX)
 	{
 		cout << "|";
-		cout.width(10);
-		cout << setprecision(3) << Xf << "   |";
+		cout << setw(10) << setprecision(3) << Xf << "   |";
 		cout.width(17);
 		if (!isEqual(Xf, 0.0))
 		{
@@ -67,24 +77,24 @@ int main()
 		}
 		element = 1;
 		sin_math = 1;
-		for (iterations = 0; abs(element) > Eps && iterations < MAX_ITER; iterations++)
+		iterations = 0;
+		for (; abs(element) > Eps && iterations < kMaxIter; iterations++)
 		{
 			element *= -Xf * Xf / ((2 * iterations + 2)*(2 * iterations + 3));
 			sin_math += element;
 		}
 		cout.width(16);
-		if (iterations < MAX_ITER)
+		if (iterations < kMaxIter)
 		{
 			cout << setprecision(6) << sin_math << "    |";
 		}
 		else
 		{
-			cout << " series diverges    |  MAX_ITER  |\n";
+			cout << "   Max iterations   |  MAX_ITER  |\n";
 			continue;
 		}
-		cout.width(7);
-		cout << iterations << "     |\n";
+		cout << setw(7) << iterations << "     |\n";	
 	}
-	cout << "-----------------------------------------------------------------------\n";
+	cout << string(71, '-');
 	return 0;
 }
