@@ -46,7 +46,7 @@ int main()
 		cout << "\nERROR!!\nEpsilon <= 0";
 		return 99;
 	}
-	if (Xf<-35)
+	if (Xf < -35)
 	{
 		cout << "\nERROR!!\nX first < 35";
 		return 100;
@@ -93,7 +93,7 @@ int main()
 			cout << "   Max iterations   |  MAX_ITER  |\n";
 			continue;
 		}
-		cout << setw(7) << iterations << "     |\n";	
+		cout << setw(7) << iterations << "     |\n";
 	}
 	cout << string(71, '-');
 	return 0;
