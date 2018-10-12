@@ -6,7 +6,7 @@ void qsort_my(double* arr, int low, int hi)
 {
 	int h = hi, l = low;
 	double vr, mid = arr[(hi + low) / 2];
-	do
+	while (l <= h)
 	{
 		while (arr[l] < mid) l++;
 		while (arr[h] > mid) h--;
@@ -18,7 +18,7 @@ void qsort_my(double* arr, int low, int hi)
 			l++;
 			h--;
 		}
-	} while (l < h);
+	}
 	if (low < h) qsort_my(arr, low, h);
 	if (l < hi) qsort_my(arr, l, hi);
 }
@@ -32,11 +32,16 @@ int main()
 	cin >> n;
 	cout << "Enter C: ";
 	cin >> c;
+	if (n<=0)
+	{
+	cout << "\nERROR!!\n N <= 0";
+	return 100;
+	}
 	arr = new double[n];
 	if (!arr)
 	{
 		cout << "\nERROR!!\n Memory not allocated!";
-		return 100;
+		return 101;
 	}
 	for (; i < n; i++)
 	{
@@ -45,12 +50,6 @@ int main()
 		if (arr[i] > c) count++;
 	}
 	qsort_my(arr, 0, n - 1);
-	//temp
-	for (i = 0; i < n; i++)
-	{
-		cout << arr[i] << " ";
-	}
-	//temp
 	for (i = 0; i < n; i++)
 	{
 		if (abs(arr[i]) >= max)
