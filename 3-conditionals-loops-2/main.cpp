@@ -8,14 +8,8 @@ using namespace std;
 bool isEqual(double a, double b)
 {
 	const double kEps = 1e-15;
-	if (abs(a - b) < kEps)
-	{
-		return 1;
-	}
-	else
-	{
-		return 0;
-	}
+	if (abs(a - b) < kEps) return 1;
+	else return 0;
 }
 
 int main()
@@ -23,9 +17,10 @@ int main()
 	double sin_lib, sin_math, Xf, Xl, dX, Eps, element;
 	int iterations;
 	const int kMaxIter = 1300;
-	cout << "Enter X first >= -35: ";
+	cout << "X can be [-35;35]\n";
+	cout << "Enter X first: ";
 	cin >> Xf;
-	cout << "Enter X last <= 35: ";
+	cout << "Enter X last: ";
 	cin >> Xl;
 	cout << "Enter dX: ";
 	cin >> dX;
