@@ -5,18 +5,15 @@
 
 using namespace std;
 
-bool isEqual(double a, double b)
+bool IsEqual(double a, double b)
 {
-	const double kEps = 1e-15;
-	if (abs(a - b) < kEps) return 1;
+	if (abs(a - b) < 1e-15) return 1;
 	else return 0;
 }
 
 int main()
 {
-	double sin_lib, sin_math, Xf, Xl, dX, Eps, element;
-	int iterations;
-	const int kMaxIter = 1300;
+	double Xf, Xl, dX, Eps;
 	cout << "X can be [-35;35]\n";
 	cout << "Enter X first: ";
 	cin >> Xf;
@@ -60,9 +57,9 @@ int main()
 		cout << "|";
 		cout << setw(10) << setprecision(3) << Xf << "   |";
 		cout.width(17);
-		if (!isEqual(Xf, 0.0))
+		if (!IsEqual(Xf, 0.0))
 		{
-			sin_lib = sin(Xf) / Xf;
+			double sin_lib = sin(Xf) / Xf;
 			cout << setprecision(6) << sin_lib << "    |";
 		}
 		else
@@ -70,9 +67,9 @@ int main()
 			cout << " inf or NaN" << "    |      inf or NaN    |      0     |\n";
 			continue;
 		}
-		element = 1;
-		sin_math = 1;
-		iterations = 0;
+		int iterations = 0;
+		double sin_math = 1, element = 1;
+		const int kMaxIter = 1300;
 		for (; abs(element) > Eps && iterations < kMaxIter; iterations++)
 		{
 			element *= -Xf * Xf / ((2 * iterations + 2)*(2 * iterations + 3));

@@ -11,15 +11,13 @@ struct EndTaylor
 	double sin_math;
 };
 
-bool isEqual(double a, double b);
+bool IsEqual(double a, double b);
 bool HaveError(double dX, double Xf, double Xl, double Eps);
 EndTaylor TaylorSeries(double X, double Eps, const int kMaxIter);
 
 int main()
 {
-	EndTaylor result;
-	double sin_lib, Xf, Xl, dX, Eps;
-	const int kMaxIter = 1300;
+	double Xf, Xl, dX, Eps;
 	cout << "X can be [-35;35]\n";
 	cout << "Enter X first: ";
 	cin >> Xf;
@@ -39,9 +37,9 @@ int main()
 		cout << "|";
 		cout << setw(10) << setprecision(3) << Xf << "   |";
 		cout.width(17);
-		if (!isEqual(Xf, 0.0))
+		if (!IsEqual(Xf, 0.0))
 		{
-			sin_lib = sin(Xf) / Xf;
+			double sin_lib = sin(Xf) / Xf;
 			cout << setprecision(6) << sin_lib << "    |";
 		}
 		else
@@ -49,7 +47,8 @@ int main()
 			cout << " inf or NaN" << "    |      inf or NaN    |      0     |\n";
 			continue;
 		}
-		result = TaylorSeries(Xf, Eps, kMaxIter);
+		const int kMaxIter = 1300;
+		EndTaylor result = TaylorSeries(Xf, Eps, kMaxIter);
 		cout.width(16);
 		if (result.iterations < kMaxIter)
 		{
@@ -66,10 +65,9 @@ int main()
 	return 0;
 }
 
-bool isEqual(double a, double b)
+bool IsEqual(double a, double b)
 {
-	const double kEps = 1e-15;
-	if (abs(a - b) < kEps) return 1;
+	if (abs(a - b) < 1e-15) return 1;
 	else return 0;
 }
 

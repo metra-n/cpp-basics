@@ -3,17 +3,10 @@
 
 using namespace std;
 
-int isEqual(double a, double b)
+bool IsEqual(double a, double b)
 {
-	const double kEps = 1e-15;
-	if (abs(a - b) < kEps)
-	{
-		return 1;
-	}
-	else
-	{
-		return 0;
-	}
+	if (abs(a - b) < 1e-15) return 1;
+	else return 0;
 }
 
 int main()
@@ -55,13 +48,13 @@ int main()
 		cout << Xf;
 		cout << "      |";
 		cout.width(12);
-		if (Xf < 0 && !isEqual(b, 0.0))
+		if (Xf < 0 && !IsEqual(b, 0.0))
 		{
 			F = -a * pow(Xf, 2) + b;
 		}
-		else if (Xf > 0 && isEqual(b, 0.0))
+		else if (Xf > 0 && IsEqual(b, 0.0))
 		{
-			if (!isEqual(Xf, c)) F = Xf / (Xf - c) + 5.5;
+			if (!IsEqual(Xf, c)) F = Xf / (Xf - c) + 5.5;
 			else
 			{
 				cout << "    inf or NaN";
@@ -71,7 +64,7 @@ int main()
 		}
 		else
 		{
-			if (isEqual(c, 0.0))
+			if (IsEqual(c, 0.0))
 			{
 				cout << "    inf or NaN";
 				cout << "    |\n";
