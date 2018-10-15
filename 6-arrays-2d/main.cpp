@@ -76,6 +76,7 @@ int main()
 			}
 		}
 	}
+	fin.close();
 	for (int j = 0; j < n_col; j++)
 	{
 		bool have_null = 0;
