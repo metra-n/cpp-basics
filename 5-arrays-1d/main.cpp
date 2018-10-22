@@ -12,10 +12,10 @@ int main()
 	cin >> n;
 	cout << "Enter C: ";
 	cin >> c;
-	if (n<=0)
+	if (n <= 0)
 	{
-	cout << "\nERROR!!\n N <= 0";
-	return 100;
+		cout << "\nERROR!!\n N <= 0";
+		return 100;
 	}
 	double* arr = new double[n];
 	if (!arr)
@@ -24,7 +24,7 @@ int main()
 		return 101;
 	}
 	int i = 0, count = 0, max_addr = 0;
-	double max=0;
+	double max = 0;
 	for (; i < n; i++)
 	{
 		cout << "Enter array's value: ";
@@ -53,7 +53,7 @@ int main()
 	cout << "Number of elements greater than C: " << count << endl;
 	SortArray(arr, 0, n - 1);
 	cout << "Array's values:\n";
-	for (i=0;i<n;i++) cout << arr[i] << " ";
+	for (i = 0; i < n; i++) cout << arr[i] << " ";
 	delete[] arr;
 	return 0;
 }

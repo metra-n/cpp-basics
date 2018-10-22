@@ -4,7 +4,7 @@
 
 using namespace std;
 
-struct ZNAK
+struct Znak
 {
 	string f_name;
 	string l_name;
@@ -14,15 +14,15 @@ struct ZNAK
 
 int days_of_month[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
-bool FirstDateIsHigher(ZNAK* arr, int index);
+bool FirstDateIsHigher(Znak* arr, int index);
 bool IsBissextile(int year);
-void SortArray(ZNAK* arr, int len);
-void OutputArray(ZNAK* arr, int index);
+void SortArray(Znak* arr, int len);
+void OutputArray(Znak* arr, int index);
 
 int main()
 {
-	const int len = 3;
-	struct ZNAK arr[len];
+	const int len = 8;
+	struct Znak arr[len];
 	for (int i = 0; i < len; i++)
 	{
 		cout << "Enter first name: ";
@@ -80,7 +80,7 @@ int main()
 	return 0;
 }
 
-bool FirstDateIsHigher(ZNAK * arr, int index)
+bool FirstDateIsHigher(Znak* arr, int index)
 {
 	int date1 = 0, date2 = 0;
 	for (int i = 0; i <= arr[index].birth[2]; i++)
@@ -106,7 +106,7 @@ bool IsBissextile(int year)
 		return false;
 }
 
-void SortArray(ZNAK* arr, int len)
+void SortArray(Znak* arr, int len)
 {
 	int i = 0;
 	bool flag = true;
@@ -125,7 +125,7 @@ void SortArray(ZNAK* arr, int len)
 	}
 }
 
-void OutputArray(ZNAK * arr, int index)
+void OutputArray(Znak* arr, int index)
 {
 	cout << "First name: " << arr[index].f_name << endl;
 	cout << "Last name: " << arr[index].l_name << endl;

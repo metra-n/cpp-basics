@@ -12,34 +12,35 @@ struct EndTaylor
 };
 
 bool IsEqual(double a, double b);
-bool HaveError(double dX, double Xf, double Xl, double Eps);
-EndTaylor TaylorSeries(double X, double Eps, const int kMaxIter);
+bool HaveError(double dx, double xf, double xl, double eps);
+EndTaylor TaylorSeries(double X, double eps, const int kMaxIter);
 
 int main()
 {
-	double Xf, Xl, dX, Eps;
-	cout << "X can be [-35;35]\n";
+	double xf, xl, dx, eps;
+	cout << "X can be [-30;30]\n";
 	cout << "Enter X first: ";
-	cin >> Xf;
+	cin >> xf;
 	cout << "Enter X last: ";
-	cin >> Xl;
-	cout << "Enter dX: ";
-	cin >> dX;
+	cin >> xl;
+	cout << "Enter dx: ";
+	cin >> dx;
 	cout << "Enter Epsilon: ";
-	cin >> Eps;
-	if (HaveError(dX, Xf, Xl, Eps)) return 100;
+	cin >> eps;
+	if (HaveError(dx, xf, xl, eps)) return 100;
 	cout << string(71, '-') << endl;
 	cout << "|      X      | sin(x)/x (built-in) | sin(x)/x (series)  | iterations |\n";
 	cout << string(71, '-') << endl;
 	cout << fixed;
-	for (; Xf <= Xl; Xf += dX)
+	const int kMaxIter = 1300;
+	for (; xf <= xl; xf += dx)
 	{
 		cout << "|";
-		cout << setw(10) << setprecision(3) << Xf << "   |";
+		cout << setw(10) << setprecision(3) << xf << "   |";
 		cout.width(17);
-		if (!IsEqual(Xf, 0.0))
+		if (!IsEqual(xf, 0.0))
 		{
-			double sin_lib = sin(Xf) / Xf;
+			double sin_lib = sin(xf) / xf;
 			cout << setprecision(6) << sin_lib << "    |";
 		}
 		else
@@ -47,8 +48,7 @@ int main()
 			cout << " inf or NaN" << "    |      inf or NaN    |      0     |\n";
 			continue;
 		}
-		const int kMaxIter = 1300;
-		EndTaylor result = TaylorSeries(Xf, Eps, kMaxIter);
+		EndTaylor result = TaylorSeries(xf, eps, kMaxIter);
 		cout.width(16);
 		if (result.iterations < kMaxIter)
 		{
@@ -71,43 +71,43 @@ bool IsEqual(double a, double b)
 	else return 0;
 }
 
-bool HaveError(double dX, double Xf, double Xl, double Eps)
+bool HaveError(double dx, double xf, double xl, double eps)
 {
-	if (dX <= 0.0)
+	if (dx <= 0.0)
 	{
 		cout << "\nERROR!!\ndX <= 0";
 		return 1;
 	}
-	if (Xf > Xl)
+	if (xf > xl)
 	{
 		cout << "\nERROR!!\nX first > X last";
 		return 1;
 	}
-	if (Eps <= 0)
+	if (eps <= 0)
 	{
 		cout << "\nERROR!!\nEpsilon <= 0";
 		return 1;
 	}
-	if (Xf < -35)
+	if (xf < -30)
 	{
-		cout << "\nERROR!!\nX first < 35";
+		cout << "\nERROR!!\nX first < 30";
 		return 1;
 	}
-	if (Xl > 35)
+	if (xl > 30)
 	{
-		cout << "\nERROR!!\nX last > 35";
+		cout << "\nERROR!!\nX last > 30";
 		return 1;
 	}
 	return 0;
 }
 
-EndTaylor TaylorSeries(double X, double Eps, const int kMaxIter)
+EndTaylor TaylorSeries(double X, double eps, const int kMaxIter)
 {
 	EndTaylor str;
 	double element = 1;
 	str.iterations = 0;
 	str.sin_math = 1;
-	for (; abs(element) > Eps && str.iterations < kMaxIter; str.iterations++)
+	for (; abs(element) > eps && str.iterations < kMaxIter; str.iterations++)
 	{
 		element *= -X * X / ((2 * str.iterations + 2)*(2 * str.iterations + 3));
 		str.sin_math += element;

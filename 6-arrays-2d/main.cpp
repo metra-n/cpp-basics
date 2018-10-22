@@ -96,7 +96,9 @@ int main()
 			break;
 		}
 		else if (j == n_col - 1)
+		{
 			cout << "\nMatrix haven't columns containing at least one zero element" << endl;
+		}
 	}
 	long* arr_spec = new long[n_rows];
 	if (!arr_spec)
