@@ -42,7 +42,7 @@ void OrderMatrix(T** matrix, T* arr_spec, int num_rows, int num_cols)
 template <class T>
 void PrintMatrix(T** matrix, T* arr_spec, int num_rows, int num_cols)
 {
-    streamsize ss = std::cout.precision();
+    streamsize print_precision = cout.precision();
     cout.precision(4);
     cout << "\nMatrix:" << string(7 * num_cols, ' ');
     cout << "|Specifications:\n";
@@ -53,7 +53,7 @@ void PrintMatrix(T** matrix, T* arr_spec, int num_rows, int num_cols)
         cout << "   |" << setw(4) << arr_spec[i] << endl;
     }
     cout << endl;
-    cout.precision(ss);
+    cout.precision(print_precision);
 }
 
 template <class T>
@@ -150,6 +150,7 @@ void Execute(int num_rows, int num_cols, ifstream& fin)
 
 int main()
 {
+    setlocale(LC_ALL, "");// for em dash "—"
     ifstream fin("input.txt");
     if (!fin)
     {
