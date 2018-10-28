@@ -20,7 +20,7 @@ bool IsFirstPersonYounger(int* birth_date_1, int* birth_date_2);
 
 int main()
 {
-    const int kNumPeople = 2;
+    const int kNumPeople = 8;
     struct Znak person[kNumPeople];
     for (int i = 0; i < kNumPeople; i++)
     {

@@ -7,6 +7,59 @@
 using namespace std;
 
 template <class T>
+void Execute(int num_rows, int num_cols, ifstream& fin);
+
+int main()
+{
+    setlocale(LC_ALL, "");// for em dash "—"
+    ifstream fin("input.txt");
+    if (!fin)
+    {
+        cout << "\nERROR!!\nCan't open file: input.txt";
+        return 99;
+    }
+
+    int num_rows;
+    fin >> num_rows;
+    int num_cols;
+    fin >> num_cols;
+    if (num_rows <= 0)
+    {
+        cout << "\nERROR!!\nNumber of rows <= 0";
+        return 100;
+    }
+    if (num_cols <= 0)
+    {
+        cout << "\nERROR!!\nNumber of columns <= 0";
+        return 101;
+    }
+
+    string option;
+selection:
+    cout << "Select the data type (0 — integer, 1 — double, 2 — float): ";
+    cin >> option;
+    if (option == "0")
+    {
+        Execute<int>(num_rows, num_cols, fin);
+    }
+    else if (option == "1")
+    {
+        Execute<double>(num_rows, num_cols, fin);
+    }
+    else if (option == "2")
+    {
+        Execute<float>(num_rows, num_cols, fin);
+    }
+    else
+    {
+        cout << "Wrong input!\n\n";
+        goto selection;
+    }
+
+    return 0;
+}
+
+template <class T>
 bool IsEqual(T a, int b)
 {
     if (abs(a - b) < 1e-15)
@@ -125,6 +178,14 @@ T** AllocateMemory(int num_rows, int num_cols)
 }
 
 template <class T>
+void DeleteAllocatedMemory(T** matrix, T* arr_spec, int num_rows)
+{
+    delete[] arr_spec;
+    for (int i = 0; i < num_rows; i++) delete[] matrix[i];
+    delete[] matrix;
+}
+
+template <class T>
 void Execute(int num_rows, int num_cols, ifstream& fin)
 {
     T** matrix = AllocateMemory<T>(num_rows, num_cols);
@@ -146,54 +207,5 @@ void Execute(int num_rows, int num_cols, ifstream& fin)
     OrderMatrix(matrix, arr_spec, num_rows, num_cols);
     cout << "After ordering:\n";
     PrintMatrix(matrix, arr_spec, num_rows, num_cols);
-}
-
-int main()
-{
-    setlocale(LC_ALL, "");// for em dash "—"
-    ifstream fin("input.txt");
-    if (!fin)
-    {
-        cout << "\nERROR!!\nCan't open file: input.txt";
-        return 99;
-    }
-
-    int num_rows;
-    fin >> num_rows;
-    int num_cols;
-    fin >> num_cols;
-    if (num_rows <= 0)
-    {
-        cout << "\nERROR!!\nNumber of rows <= 0";
-        return 100;
-    }
-    if (num_cols <= 0)
-    {
-        cout << "\nERROR!!\nNumber of columns <= 0";
-        return 101;
-    }
-
-    string option;
-selection:
-    cout << "Select the data type (0 — integer, 1 — double, 2 — float): ";
-    cin >> option;
-    if (option == "0")
-    {
-        Execute<int>(num_rows, num_cols, fin);
-    }
-    else if (option == "1")
-    {
-        Execute<double>(num_rows, num_cols, fin);
-    }
-    else if (option == "2")
-    {
-        Execute<float>(num_rows, num_cols, fin);
-    }
-    else
-    {
-        cout << "Wrong input!\n\n";
-        goto selection;
-    }
-
-    return 0;
+    DeleteAllocatedMemory(matrix, arr_spec, num_rows);
 }
